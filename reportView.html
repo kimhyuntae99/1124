@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="건강 리포트 보기 - My Health Report" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/styles.css" />
+    
+    <title>건강 리포트 - My Health Report</title>
+  </head>
+  <body>
+    <div class="container">
+      <main class="main-container" role="main">
+        <!-- 헤더 -->
+        <header class="header">
+          <div class="app-icon" role="img" aria-label="건강 아이콘">📋</div>
+          <h1 class="app-title">건강 리포트</h1>
+          <p class="app-subtitle">
+            나의 건강 데이터를 한눈에 확인하세요
+          </p>
+        </header>
+
+        <!-- 사용자 정보 -->
+        <div id="userInfo" class="user-info hidden">
+          <img id="userAvatar" class="user-avatar" src="" alt="사용자 프로필" />
+          <div>
+            <div id="userName" class="user-name"></div>
+          </div>
+        </div>
+
+        <!-- 기간 선택 -->
+        <div class="period-selector">
+          <div class="form-group">
+            <label for="periodSelect">기간 선택</label>
+            <select id="periodSelect">
+              <option value="7">최근 7일</option>
+              <option value="30">최근 30일</option>
+              <option value="90">최근 90일</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 통계 요약 -->
+        <div id="statsSection" class="stats-section">
+          <h2 class="form-section-title">📊 건강 통계</h2>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">⚖️</div>
+              <div class="stat-label">평균 체중</div>
+              <div class="stat-value" id="avgWeight">--</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">😴</div>
+              <div class="stat-label">평균 수면</div>
+              <div class="stat-value" id="avgSleep">--</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">💪</div>
+              <div class="stat-label">총 운동 시간</div>
+              <div class="stat-value" id="totalExercise">--</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">💧</div>
+              <div class="stat-label">평균 수분 섭취</div>
+              <div class="stat-value" id="avgWater">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 차트 영역 -->
+        <div id="chartSection" class="chart-section">
+          <div class="divider"></div>
+          <h2 class="form-section-title">📈 건강 트렌드</h2>
+          
+          <!-- 차트 컨테이너 -->
+          <div id="chartContainer" class="chart-container">
+            <canvas id="healthChart"></canvas>
+          </div>
+
+          <div class="message message-info" style="margin-top: 1rem;">
+            ℹ️ 차트 기능은 Chart.js 라이브러리 설치 후 사용 가능합니다
+          </div>
+        </div>
+
+        <!-- AI 분석 (향후 GPT API 연동) -->
+        <div id="aiAnalysisSection" class="ai-analysis-section">
+          <div class="divider"></div>
+          <h2 class="form-section-title">🤖 AI 건강 분석</h2>
+          
+          <div id="aiAnalysisContent" class="ai-analysis-content">
+            <p class="message message-info">
+              🔮 GPT API 연동 후 개인 맞춤형 건강 분석이 제공됩니다
+            </p>
+          </div>
+        </div>
+
+        <!-- 버튼 그룹 -->
+        <div class="button-group">
+          <button id="downloadPdfBtn" class="button button-primary">
+            📥 PDF 다운로드
+          </button>
+          
+          <button id="backBtn" class="button button-secondary">
+            🏠 홈으로
+          </button>
+        </div>
+
+        <!-- 로딩 상태 -->
+        <div id="loadingSection" class="hidden" style="padding: 2rem; text-align: center;">
+          <div class="loading" role="status" aria-label="로딩 중"></div>
+          <p style="margin-top: 1rem; color: var(--text-medium);">데이터를 불러오는 중...</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Firebase SDK & Script -->
+    <script type="module" src="/src/report.js"></script>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="중고등학생을 위한 건강 리포트 분석 웹앱 - 나의 건강을 스마트하게 관리하세요" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/styles.css" />
+    
+    <title>My Health Report - 나의 건강 리포트</title>
+  </head>
+  <body>
+    <!-- 메인 컨테이너 -->
+    <div class="app-wrapper">
+      <!-- 헤더 -->
+      <header class="app-header">
+        <div class="app-icon" role="img" aria-label="건강 아이콘">🌿</div>
+        <h1 class="app-title">My Health Report</h1>
+        <p class="app-subtitle">나의 건강을 스마트하게 관리하세요</p>
+      </header>
+
+      <!-- 탭 메뉴 -->
+      <nav class="tab-menu" role="tablist">
+        <button class="tab-button active" data-tab="input" role="tab" aria-selected="true">
+          📝 건강 데이터 입력
+        </button>
+        <button class="tab-button" data-tab="chart" role="tab" aria-selected="false">
+          📊 건강 데이터 분석
+        </button>
+        <button class="tab-button" data-tab="chatbot" role="tab" aria-selected="false">
+          💬 AI 건강 상담 챗봇
+        </button>
+      </nav>
+
+      <!-- 탭 컨텐츠 -->
+      <div class="tab-content-wrapper">
+        
+        <!-- 건강 데이터 입력 탭 -->
+        <div id="inputTab" class="tab-content active" role="tabpanel">
+          <div class="container">
+            <div class="main-container">
+              <h2 class="section-title">📝 오늘의 건강 데이터</h2>
+              
+              <!-- 템플릿 일괄 업로드 섹션 -->
+              <div class="template-upload-section">
+                <h3 class="form-section-title">📤 템플릿 일괄 업로드</h3>
+                <p class="template-description">
+                  건강 데이터를 엑셀/CSV 템플릿으로 한 번에 업로드할 수 있습니다.
+                </p>
+                <div class="template-actions">
+                  <button type="button" id="downloadTemplateBtn" class="button button-secondary">
+                    📥 템플릿 다운로드
+                  </button>
+                  <div class="file-upload-wrapper">
+                    <input type="file" id="templateFileInput" accept=".csv,.xlsx,.xls" style="display: none;" />
+                    <button type="button" id="uploadTemplateBtn" class="button button-primary">
+                      📤 템플릿 업로드
+                    </button>
+                  </div>
+                </div>
+                <p class="template-notice">
+                  💡 템플릿을 다운로드하여 엑셀에서 편집 후 업로드하세요
+                </p>
+              </div>
+
+              <div class="section-divider">
+                <span>또는 직접 입력</span>
+              </div>
+              
+              <form id="healthDataForm" class="health-form">
+                <!-- 기본 정보 -->
+                <div class="form-section">
+                  <h3 class="form-section-title">📋 기본 정보</h3>
+                  
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="nameInput">이름</label>
+                      <input type="text" id="nameInput" placeholder="홍길동" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="dateInput">날짜</label>
+                      <input type="date" id="dateInput" required />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="weightInput">체중 (kg)</label>
+                      <input type="number" id="weightInput" step="0.1" min="20" max="200" placeholder="60.5" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="heightInput">키 (cm)</label>
+                      <input type="number" id="heightInput" step="0.1" min="100" max="250" placeholder="170.0" />
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <!-- 활동 지표 -->
+                <div class="form-section">
+                  <h3 class="form-section-title">💪 활동 지표</h3>
+                  
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="sleepInput">수면 시간 (시간)</label>
+                      <input type="number" id="sleepInput" step="0.5" min="0" max="24" placeholder="7.5" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exerciseInput">운동 시간 (분)</label>
+                      <input type="number" id="exerciseInput" step="5" min="0" max="600" placeholder="30" />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="stepsInput">걸음 수</label>
+                      <input type="number" id="stepsInput" step="100" min="0" max="50000" placeholder="10000" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="waterInput">물 섭취량 (컵, 약 200ml)</label>
+                      <input type="number" id="waterInput" step="0.5" min="0" max="20" placeholder="8" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 컨디션 -->
+                <div class="form-section">
+                  <h3 class="form-section-title">🌡️ 오늘의 컨디션</h3>
+                  
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="moodInput">기분</label>
+                      <select id="moodInput">
+                        <option value="">선택하세요</option>
+                        <option value="5">😄 매우 좋음</option>
+                        <option value="4">🙂 좋음</option>
+                        <option value="3">😐 보통</option>
+                        <option value="2">😟 나쁨</option>
+                        <option value="1">😢 매우 나쁨</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="stressInput">스트레스 수준</label>
+                      <select id="stressInput">
+                        <option value="">선택하세요</option>
+                        <option value="1">😌 낮음</option>
+                        <option value="2">🙂 보통</option>
+                        <option value="3">😰 높음</option>
+                        <option value="4">😫 매우 높음</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="notesInput">메모 (선택사항)</label>
+                    <textarea id="notesInput" rows="3" placeholder="특별한 사항이 있다면 기록해보세요..."></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="button button-primary">
+                  💾 저장하기
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- 분석 탭 -->
+        <div id="chartTab" class="tab-content" role="tabpanel">
+          <div class="container">
+            <div class="main-container">
+              <h2 class="section-title">📊 건강 데이터 분석</h2>
+              
+              <!-- 기간 선택 -->
+              <div class="period-selector">
+                <label for="periodSelect">기간 선택</label>
+                <select id="periodSelect">
+                  <option value="7">최근 7일</option>
+                  <option value="14">최근 14일</option>
+                  <option value="30">최근 30일</option>
+                  <option value="90">최근 90일</option>
+                  <option value="all">전체</option>
+                </select>
+              </div>
+
+              <!-- 통계 요약 -->
+              <div class="stats-section">
+                <div class="stats-grid">
+                  <div class="stat-card">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-label">평균 체중</div>
+                    <div class="stat-value" id="avgWeight">--</div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">😴</div>
+                    <div class="stat-label">평균 수면</div>
+                    <div class="stat-value" id="avgSleep">--</div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">💪</div>
+                    <div class="stat-label">총 운동</div>
+                    <div class="stat-value" id="totalExercise">--</div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">👟</div>
+                    <div class="stat-label">평균 걸음</div>
+                    <div class="stat-value" id="avgSteps">--</div>
+                  </div>
+
+                  <div class="stat-card">
+                    <div class="stat-icon">💧</div>
+                    <div class="stat-label">평균 수분</div>
+                    <div class="stat-value" id="avgWater">--</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 차트 영역 -->
+              <div class="chart-section">
+                <h3 class="form-section-title">📈 건강 트렌드</h3>
+                <div class="chart-container">
+                  <canvas id="healthChart"></canvas>
+                </div>
+              </div>
+
+              <!-- 맞춤형 건강 조언 -->
+              <div class="health-advice-section">
+                <h3 class="form-section-title">💡 맞춤형 건강 조언</h3>
+                <div id="healthAdviceContainer" class="health-advice-container">
+                  <p class="health-advice-placeholder">데이터를 입력하면 맞춤형 건강 조언을 확인할 수 있습니다.</p>
+                </div>
+              </div>
+
+              <!-- 최근 기록 -->
+              <div class="recent-data-section">
+                <h3 class="form-section-title">📋 최근 기록</h3>
+                <div id="recentDataList"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI 건강 상담 챗봇 탭 -->
+        <div id="chatbotTab" class="tab-content" role="tabpanel">
+          <div class="container">
+            <div class="main-container">
+              <h2 class="section-title">💬 AI 건강 상담 챗봇</h2>
+              
+              <div class="chatbot-container">
+                <!-- 채팅 메시지 영역 -->
+                <div id="chatMessages" class="chat-messages">
+                  <div class="chat-message bot-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                      <p>안녕하세요! 저는 AI 건강 상담 챗봇입니다. 💚</p>
+                      <p>여러분의 건강 데이터를 바탕으로 맞춤형 건강 조언을 제공합니다.</p>
+                      <p>운동, 식습관, 수면, 스트레스 관리 등 건강과 관련된 모든 것을 물어보세요!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 입력 영역 -->
+                <form id="chatForm" class="chat-input-form">
+                  <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="건강에 대해 궁금한 점을 물어보세요..." 
+                    autocomplete="off"
+                  />
+                  <button type="submit" class="chat-send-button">
+                    ↑
+                  </button>
+                </form>
+
+                <p class="chat-notice">
+                  💡 GPT API 연동 후 실제 AI 상담이 가능합니다
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Main Script -->
+    <script type="module" src="/src/index.js"></script>
+  </body>
+</html>

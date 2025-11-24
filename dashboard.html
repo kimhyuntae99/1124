@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="건강 데이터 입력 - My Health Report" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/styles.css" />
+    
+    <title>건강 데이터 입력 - My Health Report</title>
+  </head>
+  <body>
+    <div class="container">
+      <main class="main-container" role="main">
+        <!-- 헤더 -->
+        <header class="header">
+          <div class="app-icon" role="img" aria-label="건강 아이콘">📊</div>
+          <h1 class="app-title">건강 데이터 입력</h1>
+          <p class="app-subtitle">
+            오늘의 건강 상태를 기록하세요
+          </p>
+        </header>
+
+        <!-- 사용자 정보 -->
+        <div id="userInfo" class="user-info hidden">
+          <img id="userAvatar" class="user-avatar" src="" alt="사용자 프로필" />
+          <div>
+            <div id="userName" class="user-name"></div>
+          </div>
+        </div>
+
+        <!-- 데이터 입력 폼 -->
+        <div id="dataFormSection">
+          <form id="healthDataForm" class="health-form">
+            <!-- 기본 정보 -->
+            <div class="form-section">
+              <h2 class="form-section-title">📝 기본 정보</h2>
+              
+              <div class="form-group">
+                <label for="dateInput">날짜</label>
+                <input type="date" id="dateInput" required />
+              </div>
+
+              <div class="form-group">
+                <label for="weightInput">체중 (kg)</label>
+                <input type="number" id="weightInput" step="0.1" min="20" max="200" placeholder="예: 60.5" />
+              </div>
+
+              <div class="form-group">
+                <label for="heightInput">키 (cm)</label>
+                <input type="number" id="heightInput" step="0.1" min="100" max="250" placeholder="예: 170.0" />
+              </div>
+            </div>
+
+            <!-- 건강 지표 -->
+            <div class="form-section">
+              <h2 class="form-section-title">💪 건강 지표</h2>
+              
+              <div class="form-group">
+                <label for="sleepInput">수면 시간 (시간)</label>
+                <input type="number" id="sleepInput" step="0.5" min="0" max="24" placeholder="예: 7.5" />
+              </div>
+
+              <div class="form-group">
+                <label for="exerciseInput">운동 시간 (분)</label>
+                <input type="number" id="exerciseInput" step="5" min="0" max="600" placeholder="예: 30" />
+              </div>
+
+              <div class="form-group">
+                <label for="waterInput">물 섭취량 (컵)</label>
+                <input type="number" id="waterInput" step="0.5" min="0" max="20" placeholder="예: 8" />
+              </div>
+            </div>
+
+            <!-- 컨디션 -->
+            <div class="form-section">
+              <h2 class="form-section-title">🌡️ 오늘의 컨디션</h2>
+              
+              <div class="form-group">
+                <label for="moodInput">기분</label>
+                <select id="moodInput">
+                  <option value="">선택하세요</option>
+                  <option value="5">😄 매우 좋음</option>
+                  <option value="4">🙂 좋음</option>
+                  <option value="3">😐 보통</option>
+                  <option value="2">😟 나쁨</option>
+                  <option value="1">😢 매우 나쁨</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="stressInput">스트레스 수준</label>
+                <select id="stressInput">
+                  <option value="">선택하세요</option>
+                  <option value="1">😌 낮음</option>
+                  <option value="2">🙂 보통</option>
+                  <option value="3">😰 높음</option>
+                  <option value="4">😫 매우 높음</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="notesInput">메모 (선택사항)</label>
+                <textarea id="notesInput" rows="3" placeholder="특별한 사항이 있다면 기록해보세요..."></textarea>
+              </div>
+            </div>
+
+            <!-- 버튼 그룹 -->
+            <div class="button-group">
+              <button type="submit" class="button button-primary">
+                💾 저장하기
+              </button>
+              
+              <button type="button" id="backBtn" class="button button-secondary">
+                🏠 홈으로
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 저장된 데이터 미리보기 -->
+        <div id="recentDataSection" class="recent-data-section hidden">
+          <div class="divider"></div>
+          <h2 class="form-section-title">📈 최근 기록</h2>
+          <div id="recentDataList"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Firebase SDK & Script -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
