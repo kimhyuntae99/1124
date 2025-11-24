@@ -707,12 +707,49 @@ function updateHealthAdvice(days) {
   if (stresses.length > 0) {
     const avgStress = stresses.reduce((a, b) => a + b, 0) / stresses.length;
     
-    if (avgStress >= 3) {
+    // 스트레스 변화 추이 분석
+    const recentStress = stresses.slice(0, 3); // 최근 3개 데이터
+    const oldStress = stresses.slice(3, 6); // 이전 3개 데이터
+    let trendMessage = '';
+    
+    if (recentStress.length >= 2 && oldStress.length >= 2) {
+      const recentAvg = recentStress.reduce((a, b) => a + b, 0) / recentStress.length;
+      const oldAvg = oldStress.reduce((a, b) => a + b, 0) / oldStress.length;
+      
+      if (recentAvg > oldAvg + 0.5) {
+        trendMessage = ' 최근 스트레스가 증가하는 추세입니다.';
+      } else if (recentAvg < oldAvg - 0.5) {
+        trendMessage = ' 스트레스가 감소하는 긍정적인 추세입니다!';
+      }
+    }
+    
+    if (avgStress >= 3.5) {
+      advices.push({
+        icon: '🚨',
+        title: '높은 스트레스 - 즉시 관리 필요',
+        message: `평균 스트레스 수준이 매우 높습니다(${avgStress.toFixed(1)}/4).${trendMessage} 다음을 시도해보세요:\n• 즉시: 5분 심호흡 (4초 들이쉬기, 7초 참기, 8초 내쉬기)\n• 매일: 20분 이상 산책이나 가벼운 운동\n• 전문가 상담 고려 (학교 상담교사, 부모님과 대화)\n• 충분한 수면과 휴식 우선순위`,
+        type: 'error'
+      });
+    } else if (avgStress >= 2.5) {
       advices.push({
         icon: '🧘',
         title: '스트레스 관리 필요',
-        message: '스트레스 수준이 높습니다. 명상, 심호흡, 취미 활동, 친구와의 대화 등으로 스트레스를 관리해보세요. 너무 힘들 때는 주변에 도움을 요청하세요.',
+        message: `스트레스 수준이 높은 편입니다(${avgStress.toFixed(1)}/4).${trendMessage} 관리 방법:\n• 하루 10분 명상이나 요가\n• 좋아하는 취미 활동 시간 확보\n• 친구나 가족과 대화하기\n• 규칙적인 운동으로 스트레스 해소\n• 충분한 수면 (8-10시간)`,
         type: 'warning'
+      });
+    } else if (avgStress >= 1.5) {
+      advices.push({
+        icon: '💆',
+        title: '스트레스 주의',
+        message: `스트레스가 보통 수준입니다(${avgStress.toFixed(1)}/4).${trendMessage} 예방적 관리:\n• 규칙적인 운동 습관 유지\n• 충분한 휴식과 여가 시간\n• 스트레칭으로 긴장 이완\n• 긍정적인 생각과 감사 일기`,
+        type: 'info'
+      });
+    } else {
+      advices.push({
+        icon: '😌',
+        title: '스트레스 관리 우수',
+        message: `스트레스를 잘 관리하고 있습니다(${avgStress.toFixed(1)}/4).${trendMessage} 현재의 좋은 습관을 계속 유지하세요! 스트레스가 낮은 상태를 유지하는 것은 정신 건강과 학업 성취에 큰 도움이 됩니다.`,
+        type: 'success'
       });
     }
   }
